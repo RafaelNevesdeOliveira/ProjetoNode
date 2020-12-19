@@ -8,7 +8,7 @@ export default class CreateUsers1608324544720 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid' //gerar ID automaticamente
           },
@@ -41,6 +41,6 @@ export default class CreateUsers1608324544720 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('appointments'); //deletar tabela
+    await queryRunner.dropTable('users'); //deletar tabela
   }
 }

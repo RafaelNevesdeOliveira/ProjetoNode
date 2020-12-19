@@ -4,9 +4,10 @@
   "description": "FirstProject",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
+    "dev:server": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts",
+    "start": "ts-node src/index.ts",
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "repository": "git+https://github.com/RafaelNevesdeOliveira/ProjetoNode.git",
   "keywords": [],
@@ -22,7 +23,9 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "express": "^4.17.1",
     "npx": "^10.2.2",
+    "pg": "^8.5.1",
     "tsc": "^1.20150623.0",
+    "typeorm": "^0.2.29",
     "uuidv4": "^6.2.5",
     "yarn": "^1.22.10"
   },

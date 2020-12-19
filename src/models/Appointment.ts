@@ -1,18 +1,26 @@
-import {uuid} from 'uuidv4'
-
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm'
+import User from './User';
+@Entity('appointments')
 class Appointment {
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    provider: string;
+  @Column() // passar sem nada eh igual passar varchar
+  provider_id: string;
 
-    date: Date;
+  @ManyToOne(() => User) //Tipo de relacionamento SQL
+  @JoinColumn({ name: 'provider_id' }) //Qual coluna vai fazer a ligação
+  provider: User;
 
-    // criar variaveis mas o Omit vai servir para apenas o ID nao ser criado
-    constructor({provider, date,}: Omit<Appointment, 'id'>) {
-        this.id = uuid();
-        this.provider = provider;
-        this.date = date
-    }
+  @Column('timestamp with time zone')// caso nao use postgres, talvez não seja possível usar Time Zone
+  date: Date;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
+
 }
 
 export default Appointment;

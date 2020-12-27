@@ -1,14 +1,16 @@
 import { getRepository } from 'typeorm';
 import User from '../models/User';
+import { sign } from 'jsonwebtoken';
 import { compare } from 'bcryptjs';
-
+import authConfig from '../config/auth';
 interface RequestDTO {
   email: string;
   password: string;
 }
 
 interface Response {
-  user: User
+  user: User;
+  token: string;
 }
 
 class AuthenticateUserService {
@@ -21,17 +23,26 @@ class AuthenticateUserService {
       throw new Error('Incorrect email/password combination.')
     }
 
-    //user.password = Senha criptografada
-    //passoword = Senha não-criptografada
-    // método compara se as duas senhas batem, caso sim, ele retorna "true"
+    // *user.password = Senha criptografada
+    // *passoword = Senha não-criptografada
+    // * método compara se as duas senhas batem, caso sim, ele retorna "true"
 
     const passwordMatched = await compare(password, user.password);
     if (!passwordMatched) {
       throw new Error('Incorrect email/password combination.')
     }
 
+    const { secret, expiresIn} = authConfig.jwt
+
+    // !código = gostack pelo md5
+    const token = sign({}, secret, {
+      subject: user.id,
+      expiresIn,
+    });
+
     return {
-      user
+      user,
+      token,
     }
   }
 }

@@ -19,7 +19,7 @@ export default function ensureAuthenticated(request: Request, response: Response
   //*Bearer shuadhashuda(codigo secreto)
 
   //* constante onde se tem virgula sem nada é porque não vai ser utilizado
-  const [, token] = authHeader.split('')
+  const [, token] = authHeader.split(' ')
 
   try {
     const decoded = verify(token, authConfig.jwt.secret)
